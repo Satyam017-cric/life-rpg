@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}History — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">ACTIVITY LOG</div><h1>Your progression history.</h1><p>Every completed quest creates a persistent activity record.</p></div></section>
+<section class="glass-panel table-panel section">
+<div class="table-wrap"><table><caption class="sr-only">Quest completion history</caption><thead><tr><th>Date</th><th>Quest</th><th>Category</th><th>XP</th><th>Gold</th></tr></thead><tbody>{% for log in logs %}<tr><td>{{ log.activity_date }}</td><td>{{ log.title or 'Archived quest' }}</td><td>{{ category_map.get(log.category, ('Other','⚡'))[1] }} {{ category_map.get(log.category, ('Other','⚡'))[0] }}</td><td>+{{ log.xp_earned }}</td><td>+{{ log.gold_earned }}</td></tr>{% else %}<tr><td colspan="5" class="table-empty">No activity yet. Complete your first quest!</td></tr>{% endfor %}</tbody></table></div>
+</section>
+{% endblock %}

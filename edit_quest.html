@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Edit Quest — Life RPG{% endblock %}
+{% block content %}
+<section class="auth-wrap"><article class="auth-card glass-panel"><div class="eyebrow">MISSION CONTROL</div><h1>Edit Quest</h1><p>Changing difficulty recalculates future completion rewards on the server.</p>
+<form action="{{ url_for('edit_quest', quest_id=quest.id) }}" method="post" class="form-stack">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label>Quest title<input name="title" maxlength="120" required value="{{ quest.title }}"></label>
+<label>Description<textarea name="description" maxlength="500" rows="4">{{ quest.description }}</textarea></label>
+<div class="form-grid"><label>Category<select name="category"><option value="coding" {% if quest.category=='coding' %}selected{% endif %}>Coding</option><option value="study" {% if quest.category=='study' %}selected{% endif %}>Study</option><option value="fitness" {% if quest.category=='fitness' %}selected{% endif %}>Fitness</option><option value="mindfulness" {% if quest.category=='mindfulness' %}selected{% endif %}>Mindfulness</option><option value="reading" {% if quest.category=='reading' %}selected{% endif %}>Reading</option><option value="other" {% if quest.category=='other' %}selected{% endif %}>Other</option></select></label>
+<label>Difficulty<select name="difficulty"><option value="easy" {% if quest.difficulty=='easy' %}selected{% endif %}>Easy · 30 XP</option><option value="medium" {% if quest.difficulty=='medium' %}selected{% endif %}>Medium · 60 XP</option><option value="hard" {% if quest.difficulty=='hard' %}selected{% endif %}>Hard · 110 XP</option><option value="epic" {% if quest.difficulty=='epic' %}selected{% endif %}>Epic · 180 XP</option></select></label></div>
+<div style="display:flex;gap:10px"><button class="button button-primary" type="submit">Save Changes</button><a class="button" href="{{ url_for('quests') }}">Cancel</a></div>
+</form></article></section>
+{% endblock %}

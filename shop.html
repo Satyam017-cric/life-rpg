@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Shop — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">REWARD ARMORY</div><h1>Spend your Gold.</h1><p>Cosmetics and badges are persistent inventory items tied to your character.</p></div><div class="currency-card">🪙 <strong>{{ user.gold }}</strong> Gold</div></section>
+<section class="shop-grid section">{% for item in items %}
+<article class="shop-card glass-panel">
+  <div class="shop-icon">{{ item.icon }}</div><div class="shop-type">{{ item.item_type|upper }}</div><h3>{{ item.name }}</h3><p>{{ item.description }}</p>
+  <div class="shop-footer"><strong>🪙 {{ item.price }}</strong>{% if item.id in owned %}<span class="owned-label">OWNED</span>{% else %}<form action="{{ url_for('buy_item', item_id=item.id) }}" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button button-primary button-small" type="submit">Unlock</button></form>{% endif %}</div>
+</article>
+{% endfor %}</section>
+{% endblock %}

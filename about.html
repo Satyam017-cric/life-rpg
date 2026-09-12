@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}About — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">SYSTEM OVERVIEW</div><h1>How Life RPG works.</h1><p>A real-world productivity system wrapped in an RPG progression loop.</p></div></section>
+<section class="feature-grid section">
+  <article class="feature-card glass-panel"><div class="feature-icon">🔐</div><h3>Secure accounts</h3><p>Each character gets isolated server-side records, password hashing and session authentication.</p></article>
+  <article class="feature-card glass-panel"><div class="feature-icon">🗄</div><h3>Real persistence</h3><p>SQLite stores users, quests, attributes, inventory and activity history so a refresh does not erase progress.</p></article>
+  <article class="feature-card glass-panel"><div class="feature-icon">📈</div><h3>Non-linear progression</h3><p>Higher levels require increasingly more XP, so progression slows naturally as the character grows.</p></article>
+  <article class="feature-card glass-panel"><div class="feature-icon">♿</div><h3>Accessible UI</h3><p>Semantic landmarks, labels, keyboard-friendly controls, visible focus and responsive layouts are built in.</p></article>
+</section>
+<section class="glass-panel explainer section"><h2>PDF requirement mapping</h2><div class="mapping-grid"><div><b>Authentication</b><span>Signup, login, logout, per-user data.</span></div><div><b>CRUD</b><span>Create, view, complete and delete quests.</span></div><div><b>RPG Engine</b><span>Non-linear XP and server-calculated rewards.</span></div><div><b>Gamification</b><span>Streaks, attributes, Gold and shop inventory.</span></div><div><b>Responsive</b><span>Desktop, tablet and mobile layouts.</span></div><div><b>Persistence</b><span>SQLite database; no localStorage dependency.</span></div></div></section>
+{% endblock %}

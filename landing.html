@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Life RPG — Turn Life Into A Game{% endblock %}
+{% block content %}
+<section class="hero-grid">
+  <div class="hero-copy">
+    <div class="eyebrow">YOUR LIFE. YOUR QUESTLINE.</div>
+    <h1>Turn ordinary goals into an <span class="accent">epic RPG.</span></h1>
+    <p class="hero-text">Study. Code. Train. Read. Focus. Complete real-life quests, earn XP, build attributes, protect your streak, and unlock your next level.</p>
+    <div class="hero-actions">
+      <a class="button button-primary button-large" href="{{ url_for('signup') }}">Create Character</a>
+      <a class="button button-ghost button-large" href="{{ url_for('login') }}">Enter World</a>
+    </div>
+    <div class="mini-proof">
+      <span>⚡ Instant feedback</span><span>🧠 Skill growth</span><span>🔥 Streaks</span><span>🪙 Rewards</span>
+    </div>
+  </div>
+  <div class="hero-panel glass-panel">
+    <div class="scanline"></div>
+    <div class="panel-header"><span>CHARACTER // ACTIVE</span><span class="status-dot">ONLINE</span></div>
+    <div class="hero-avatar">🧙</div>
+    <div class="level-label">LEVEL 12</div>
+    <div class="xp-bar"><span style="width:78%"></span></div>
+    <div class="xp-caption"><span>780 XP</span><span>1000 XP</span></div>
+    <div class="stat-grid compact">
+      <div><span>INTELLECT</span><b>72</b></div>
+      <div><span>STRENGTH</span><b>48</b></div>
+      <div><span>FOCUS</span><b>61</b></div>
+      <div><span>WISDOM</span><b>55</b></div>
+    </div>
+    <div class="hero-quest"><div><span class="quest-icon">⚔</span><span>Complete 2 coding problems</span></div><strong>+60 XP</strong></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading"><div><div class="eyebrow">CORE LOOP</div><h2>One simple loop. Real progression.</h2></div></div>
+  <div class="feature-grid">
+    <article class="feature-card"><div class="feature-icon">⚔</div><h3>Create Quests</h3><p>Convert everyday goals into missions with category and difficulty.</p></article>
+    <article class="feature-card"><div class="feature-icon">✦</div><h3>Earn XP & Gold</h3><p>Server-calculated rewards make completion meaningful and persistent.</p></article>
+    <article class="feature-card"><div class="feature-icon">📈</div><h3>Level Your Character</h3><p>Non-linear XP requirements make each level harder and more satisfying.</p></article>
+    <article class="feature-card"><div class="feature-icon">🔥</div><h3>Protect Your Streak</h3><p>Daily activity keeps your momentum alive while your attributes grow.</p></article>
+  </div>
+</section>
+{% endblock %}

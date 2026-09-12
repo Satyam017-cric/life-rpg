@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} — Life RPG{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card glass-panel">
+    <div class="eyebrow">{{ eyebrow }}</div>
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
+    <form method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      {% if mode == 'signup' %}
+      <label>Name<input name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Your character name"></label>
+      {% endif %}
+      <label>Email<input name="email" type="email" autocomplete="email" required placeholder="hero@example.com"></label>
+      <label>Password<input name="password" type="password" autocomplete="{{ 'new-password' if mode == 'signup' else 'current-password' }}" required minlength="8" placeholder="At least 8 characters"></label>
+      <button class="button button-primary button-large" type="submit">{{ action }}</button>
+    </form>
+    <div class="auth-footer">{{ footer_text }} <a href="{{ footer_url }}">{{ footer_link }}</a></div>
+  </div>
+</section>
+{% endblock %}

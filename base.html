@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Life RPG turns real-world goals into rewarding quests, levels, stats and streaks.">
+  <title>{% block title %}Life RPG{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="page-shell">
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}" aria-label="Life RPG home">
+      <span class="brand-mark">⚔</span><span>Life<span class="accent">RPG</span></span>
+    </a>
+    {% if g.user %}
+    <button class="mobile-nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation">☰</button>
+    <nav id="main-nav" class="nav" aria-label="Main navigation">
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('quests') }}">Quests</a>
+      <a href="{{ url_for('character') }}">Character</a>
+      <a href="{{ url_for('shop') }}">Shop</a>
+      <a href="{{ url_for('history') }}">History</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <form action="{{ url_for('logout') }}" method="post" class="inline-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="nav-logout" type="submit">Logout</button>
+      </form>
+    </nav>
+    <div class="top-stats" aria-label="Current character summary">
+      <span class="pill">Lv. {{ g.user.level }}</span>
+      <span class="pill gold">🪙 {{ g.user.gold }}</span>
+    </div>
+    {% else %}
+    <nav class="nav public-nav" aria-label="Public navigation">
+      <a href="{{ url_for('about') }}">How it works</a>
+      <a class="button button-small" href="{{ url_for('login') }}">Login</a>
+      <a class="button button-small button-primary" href="{{ url_for('signup') }}">Start Adventure</a>
+    </nav>
+    {% endif %}
+  </header>
+
+  <main id="main" class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-stack" aria-live="polite">
+          {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<div id="celebration" class="celebration" aria-hidden="true">
+  <div class="celebration-card">
+    <div class="burst">✦</div>
+    <div id="celebration-title" class="eyebrow">QUEST COMPLETE</div>
+    <div id="celebration-xp" class="celebration-number">+60 XP</div>
+    <div id="celebration-gold" class="celebration-sub">+22 Gold</div>
+    <div id="celebration-level" class="level-up-text"></div>
+    <button id="celebration-close" class="button button-primary" type="button">Continue</button>
+  </div>
+</div>
+<script>
+window.APP = { csrfToken: {{ csrf_token|tojson }} };
+</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
