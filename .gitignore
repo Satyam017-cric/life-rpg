@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+life_rpg.db
+instance/
+.DS_Store
