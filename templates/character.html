@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Character — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">CHARACTER SHEET</div><h1>{{ user.name }}</h1><p>Your progress is stored on the server and follows you across sessions.</p></div></section>
+<section class="dashboard-grid">
+  <article class="glass-panel profile-card large-profile">
+    <div class="hero-avatar big">🧙</div>
+    <div class="eyebrow">LEVEL {{ user.level }}</div>
+    <h2>Life Engineer</h2>
+    <div class="summary-strip"><div><span>🔥</span><b>{{ user.streak }}</b><small>day streak</small></div><div><span>🪙</span><b>{{ user.gold }}</b><small>gold</small></div><div><span>✦</span><b>{{ user.xp }}</b><small>total XP</small></div></div>
+  </article>
+  <article class="glass-panel stats-card">
+    <div class="panel-header"><span>ATTRIBUTE BUILD</span><span>Server tracked</span></div>
+    {% for key, label, icon in [('intellect','Intellect','🧠'),('knowledge','Knowledge','📚'),('strength','Strength','💪'),('focus','Focus','🧘'),('wisdom','Wisdom','📖'),('discipline','Discipline','⚡')] %}
+    <div class="stat-line"><div><span>{{ icon }}</span><strong>{{ label }}</strong></div><b>{{ attrs[key] }}</b></div><div class="mini-bar"><span style="width:{{ [attrs[key],100]|min }}%"></span></div>
+    {% endfor %}
+  </article>
+</section>
+<section class="section"><div class="section-heading"><div><div class="eyebrow">INVENTORY</div><h2>Unlocked items</h2></div></div>
+<div class="shop-grid">{% for item in inventory %}<article class="shop-card owned"><div class="shop-icon">{{ item.icon }}</div><h3>{{ item.name }}</h3><p>{{ item.description }}</p><span class="owned-label">OWNED · {{ item.item_type|upper }}</span></article>{% else %}<div class="empty-state glass-panel"><div class="empty-icon">🛒</div><h3>Nothing unlocked yet.</h3><p>Earn Gold through quests and visit the Shop.</p><a class="button button-primary" href="{{ url_for('shop') }}">Open Shop</a></div>{% endfor %}</div></section>
+{% endblock %}

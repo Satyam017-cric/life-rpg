@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Quests — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">MISSION CONTROL</div><h1>Your quests.</h1><p>The server determines XP and Gold from the selected difficulty. You only prove completion.</p></div></section>
+<section class="two-column section">
+  <article class="glass-panel form-card">
+    <div class="panel-header"><span>CREATE QUEST</span><span class="status-dot">READY</span></div>
+    <form action="{{ url_for('create_quest') }}" method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label>Quest title<input name="title" maxlength="120" required placeholder="Complete 2 coding problems"></label>
+      <label>Description<textarea name="description" maxlength="500" rows="4" placeholder="What exactly will success look like?"></textarea></label>
+      <div class="form-grid">
+        <label>Category<select name="category"><option value="coding">Coding</option><option value="study">Study</option><option value="fitness">Fitness</option><option value="mindfulness">Mindfulness</option><option value="reading">Reading</option><option value="other">Other</option></select></label>
+        <label>Difficulty<select name="difficulty"><option value="easy">Easy · 30 XP</option><option value="medium">Medium · 60 XP</option><option value="hard">Hard · 110 XP</option><option value="epic">Epic · 180 XP</option></select></label>
+      </div>
+      <button class="button button-primary" type="submit">Add Quest</button>
+    </form>
+  </article>
+  <article>
+    <div class="section-heading compact-heading"><div><div class="eyebrow">ACTIVE + COMPLETED</div><h2>Quest log</h2></div></div>
+    <div class="quest-list">
+      {% for q in quests %}
+      <article class="quest-card {% if q.status == 'completed' %}completed{% endif %}">
+        <div class="quest-main"><div class="quest-symbol">{{ category_map[q.category][1] }}</div><div class="quest-text"><div class="quest-meta"><span>{{ category_map[q.category][0] }}</span><span>{{ q.difficulty|upper }}</span></div><h3>{{ q.title }}</h3>{% if q.description %}<p>{{ q.description }}</p>{% endif %}</div></div>
+        <div class="quest-actions">
+          {% if q.status == 'pending' %}
+          <form action="{{ url_for('complete_quest', quest_id=q.id) }}" method="post" class="complete-form" data-quest-title="{{ q.title|e }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="button button-primary button-small" type="submit">Complete</button>
+          </form>
+          {% else %}
+          <span class="completed-badge">✓ Completed</span>
+          {% endif %}
+          {% if q.status == 'pending' %}<a class="icon-button" href="{{ url_for('edit_quest', quest_id=q.id) }}" aria-label="Edit {{ q.title }}">✎</a>{% endif %}
+          <form action="{{ url_for('delete_quest', quest_id=q.id) }}" method="post" class="delete-form" data-confirm="Delete this quest permanently?">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="icon-button" aria-label="Delete {{ q.title }}" type="submit">🗑</button>
+          </form>
+        </div>
+        <div class="quest-rewards"><span>+{{ q.xp_reward }} XP</span><span>+{{ q.gold_reward }} 🪙</span></div>
+      </article>
+      {% else %}
+      <div class="empty-state glass-panel"><div class="empty-icon">✨</div><h3>Mission board is empty.</h3><p>Create a quest and start your progression.</p></div>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

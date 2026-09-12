@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — Life RPG{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><div class="eyebrow">COMMAND CENTER</div><h1>Welcome back, {{ user.name }}.</h1><p>Today's mission: make one real-world action count.</p></div>
+  <a class="button button-primary" href="{{ url_for('quests') }}">+ New Quest</a>
+</section>
+
+<section class="dashboard-grid">
+  <article class="glass-panel profile-card">
+    <div class="panel-header"><span>CHARACTER STATUS</span><span class="status-dot">ACTIVE</span></div>
+    <div class="profile-top"><div class="avatar-circle">{{ '🧙' }}</div><div><div class="eyebrow">LEVEL {{ user.level }}</div><h2>{{ user.name }}</h2><p>Adventurer class: Life Engineer</p></div></div>
+    <div class="xp-row"><span>XP</span><strong>{{ user.xp }}</strong></div>
+    <div class="xp-bar large"><span style="width:{{ xp_pct }}%"></span></div>
+    <div class="xp-caption"><span>{{ xp_current }} XP this level</span><span>{{ xp_needed }} needed</span></div>
+    <div class="summary-strip"><div><span>🔥</span><b>{{ user.streak }}</b><small>day streak</small></div><div><span>🪙</span><b>{{ user.gold }}</b><small>gold</small></div><div><span>⚔</span><b>{{ quests|length }}</b><small>visible quests</small></div></div>
+  </article>
+
+  <article class="glass-panel stats-card">
+    <div class="panel-header"><span>ATTRIBUTES</span><a href="{{ url_for('character') }}">View character →</a></div>
+    {% for key, label, icon in [('intellect','Intellect','🧠'),('knowledge','Knowledge','📚'),('strength','Strength','💪'),('focus','Focus','🧘'),('wisdom','Wisdom','📖'),('discipline','Discipline','⚡')] %}
+    {% set value=attrs[key] %}
+    <div class="stat-line"><div><span>{{ icon }}</span><strong>{{ label }}</strong></div><b>{{ value }}</b></div>
+    <div class="mini-bar"><span style="width:{{ [value,100]|min }}%"></span></div>
+    {% endfor %}
+  </article>
+</section>
+
+<section class="section">
+  <div class="section-heading"><div><div class="eyebrow">MISSION BOARD</div><h2>Today's quests</h2></div><a href="{{ url_for('quests') }}" class="text-link">All quests →</a></div>
+  {% if quests %}
+  <div class="quest-list">
+    {% for q in quests %}
+    <article class="quest-card {% if q.status == 'completed' %}completed{% endif %}">
+      <div class="quest-main"><div class="quest-symbol">{{ category_map[q.category][1] }}</div><div><div class="quest-meta"><span>{{ category_map[q.category][0] }}</span><span>{{ q.difficulty|upper }}</span></div><h3>{{ q.title }}</h3>{% if q.description %}<p>{{ q.description }}</p>{% endif %}</div></div>
+      <div class="quest-rewards"><span>+{{ q.xp_reward }} XP</span><span>+{{ q.gold_reward }} 🪙</span></div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state glass-panel"><div class="empty-icon">⚔</div><h3>No quests yet.</h3><p>Create your first real-world mission.</p><a class="button button-primary" href="{{ url_for('quests') }}">Create Quest</a></div>
+  {% endif %}
+</section>
+{% endblock %}
